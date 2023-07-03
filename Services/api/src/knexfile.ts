@@ -1,10 +1,9 @@
-import type { Knex } from "knex";
+import "dotenv/config";
 
-// Update with your config settings.
 
-export const config: { [key: string]: Knex.Config } = {
+module.exports = {
   development: {
-    client: "postgresql",
+    client: `pg`,
     connection: {
       database: process.env.DB_NAME,
       user: `${process.env.DB_USERNAME}`,
@@ -14,5 +13,3 @@ export const config: { [key: string]: Knex.Config } = {
     },
   },
 };
-
-
