@@ -9,14 +9,14 @@ export class seasons extends Model {
     return {
       drivers: {
         relation: Model.ManyToManyRelation,
-        modelClass: `${__dirname}/career_history`,
+        modelClass: `${__dirname}/drivers`,
         join: {
           from: "seasons.id",
           through: {
             from: "season_driver.season_id",
             to: "season_driver.driver_id",
           },
-          to: "career_history.id",
+          to: "drivers.id",
         },
       },
       races: {
@@ -29,6 +29,18 @@ export class seasons extends Model {
             to: "season_race.race_id",
           },
           to: "races.id",
+        },
+      },
+      teams: {
+        relation: Model.ManyToManyRelation,
+        modelClass: `${__dirname}/teams`,
+        join: {
+          from: "seasons.id",
+          through: {
+            from: "season_team.season_id",
+            to: "season_team.team_id",
+          },
+          to: "teams.id",
         },
       },
     };

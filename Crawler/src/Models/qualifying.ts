@@ -9,10 +9,10 @@ export class qualifying extends Model {
     return {
       rank: {
         relation: Model.BelongsToOneRelation,
-        modelClass: `${__dirname}/rank`,
+        modelClass: `${__dirname}/driver_rank`,
         join: {
           from: "qualifying.id",
-          to: "rank.qualifying_id",
+          to: "driver_rank.qualifying_id",
         },
       },
     };
