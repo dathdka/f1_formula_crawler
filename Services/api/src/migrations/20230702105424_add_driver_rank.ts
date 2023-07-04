@@ -1,7 +1,7 @@
 import { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
-  return knex.schema.createTable("rank", (table) => {
+  return knex.schema.createTable("driver_rank", (table) => {
     table
       .integer("driver_id")
       .references("id")
@@ -24,5 +24,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  return knex.schema.dropTable("rank");
+  return knex.schema.dropTable("driver_rank");
 }
