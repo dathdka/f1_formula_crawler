@@ -7,16 +7,16 @@ export class teams extends Model {
 
   static get relationMappings() {
     return {
-      members: {
+      participation_history: {
         relation: Model.ManyToManyRelation,
-        modelClass: `${__dirname}/drivers`,
+        modelClass: `${__dirname}/seasons`,
         join: {
           from: "teams.id",
           through: {
-            from: "career_history.team_id",
-            to: "career_history.driver_id",
+            from: "season_team.team_id",
+            to: "season_team.season_id",
           },
-          to: "drivers.id",
+          to: "seasons.id",
         },
       },
     };

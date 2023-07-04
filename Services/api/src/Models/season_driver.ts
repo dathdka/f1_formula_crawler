@@ -17,18 +17,18 @@ export class season_driver extends Model {
       },
       driver: {
         relation: Model.BelongsToOneRelation,
-        modelClass: `${__dirname}/career_history`,
+        modelClass: `${__dirname}/drivers`,
         join: {
           from: "season_driver.driver_id",
-          to: "career_history.id",
+          to: "drivers.id",
         },
       },
       rank: {
-        relation: Model.HasManyRelation,
-        modelClass: `${__dirname}/rank`,
+        relation: Model.BelongsToOneRelation,
+        modelClass: `${__dirname}/driver_rank`,
         join: {
-          from: "career_history.id",
-          to: "rank.driver_id",
+          from: "season_driver.id",
+          to: "driver_rank.driver_id",
         },
       },
     };

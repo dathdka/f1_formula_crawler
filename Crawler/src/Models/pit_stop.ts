@@ -9,10 +9,10 @@ export class pit_stop extends Model {
     return {
       rank: {
         relation: Model.BelongsToOneRelation,
-        modelClass: `${__dirname}/rank`,
+        modelClass: `${__dirname}/driver_rank`,
         join: {
           from: "pit_stop.id",
-          to: "rank.pit_stop_id",
+          to: "driver_rank.pit_stop_id",
         },
       },
     };
