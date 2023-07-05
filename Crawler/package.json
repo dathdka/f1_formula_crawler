@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^20.3.3",
     "dotenv": "^16.3.1",
     "knex": "^2.4.2",
     "objection": "^3.0.4",
