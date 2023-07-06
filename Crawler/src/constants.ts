@@ -24,6 +24,14 @@ const crawlSelector = {
   DRIVER_COMPLETED_LAPS: "td.bold.hide-for-mobile",
   DRIVER_FINISH_TIME: "td:nth-child(7)",
   DRIVER_POINTS: "td:nth-child(8)",
+  FASTEST_LAPS_RESULT:
+    "body > div.site-wrapper > main > article > div > div.ResultArchiveContainer > div.resultsarchive-wrapper > div.resultsarchive-content.group > div.resultsarchive-col-right > table > tbody > tr",
+  FASTEST_LAPS_DRIVER_FIRST_NAME: "td:nth-child(4) > span.hide-for-tablet",
+  FASTEST_LAPS_DRIVER_LAST_NAME: "td:nth-child(4) > span.hide-for-mobile",
+  FASTEST_LAPS_LAP: "td:nth-child(6)",
+  FASTEST_LAPS_TIME_OF_DAY: "td:nth-child(7)",
+  FASTEST_LAPS_TIME: "td:nth-child(8)",
+  FASTEST_LAPS_AVERAGE_SPEED: "td:nth-child(9)",
   SEASON_URLS:
     "body > div.site-wrapper > main > article > div > div.ResultArchiveContainer > div.resultsarchive-filter-container > div:nth-child(1) > ul > li > a",
   RACE_URLS:

@@ -5,6 +5,7 @@ import { DriverRank } from "../types/DriverRank";
 import { formatDate } from "../Utils/formatDate";
 import { createNew } from "../Service/driver_rank";
 import moment from "moment";
+import { fastestLaps } from "./fastest_laps";
 const CRAWL_SELECTOR = require("../constants").CRAWL;
 
 const getResults = async (
@@ -18,6 +19,8 @@ const getResults = async (
   const resultElements = await page.$$(CRAWL_SELECTOR.DRIVER_RESULTS);
 
   if (resultElements.length === 0) throw new Error("no element found");
+
+  let driverRanks : DriverRank[] = [];
   for (let resultElement of resultElements) {
     const position = await resultElement.$eval(
       CRAWL_SELECTOR.DRIVER_POSITION,
@@ -79,8 +82,9 @@ const getResults = async (
       finish_time,
     };
 
-    await createNew(driverRank);
+    driverRanks.push(await createNew(driverRank) as DriverRank);
   }
+  return driverRanks;
 };
 
 export const driverRank = async (
@@ -90,6 +94,7 @@ export const driverRank = async (
   seasonDrivers: SeasonDriver[]
 ) => {
   await page.goto(seasonUrl);
+  
   await page.waitForSelector(CRAWL_SELECTOR.RACE_URLS);
 
   const raceUrls = await page.$$eval(CRAWL_SELECTOR.RACE_URLS, (races) => {
@@ -99,9 +104,17 @@ export const driverRank = async (
     });
   });
 
+  let driverRanks : DriverRank[] = []
   for (let raceUrl of raceUrls) {
     try {
-      await getResults(page, raceUrl, seasonRaces, seasonDrivers);
+      driverRanks = [...await getResults(page, raceUrl, seasonRaces, seasonDrivers)];
+    } catch (error) {
+      continue;
+    }
+  }
+  for (let raceUrl of raceUrls) {
+    try {
+      await fastestLaps(page, raceUrl, seasonRaces, seasonDrivers, driverRanks);
     } catch (error) {
       continue;
     }

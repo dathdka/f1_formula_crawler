@@ -16,3 +16,11 @@ export const create = async (driverRank: DriverRank) =>
       .insert(driverRank)
       .withGraphFetched("[driver, race, pit_stop, qualifying, fastest_laps]")
   ).toJSON();
+
+export const update = async (driverRank: DriverRank) =>
+  (
+    await driver_rank
+      .query()
+      .findById(driverRank.id || "")
+      .withGraphFetched("[driver, race, pit_stop, qualifying, fastest_laps]")
+  )?.toJSON();

@@ -1,10 +1,14 @@
 import { DriverRank } from "../types/DriverRank";
-import { findByDriverRank, create } from "../Repos/driver_rank";
+import { findByDriverRank, create, update } from "../Repos/driver_rank";
 
 export const createNew = async (driverRank: DriverRank) => {
-  const seasonRaceAlreadyExists = await findByDriverRank(driverRank);
-  if (!seasonRaceAlreadyExists) {
+  const driverRankAlreadyExists = await findByDriverRank(driverRank);
+  if (!driverRankAlreadyExists) {
     return await create(driverRank);
   }
-  return seasonRaceAlreadyExists;
+  return driverRankAlreadyExists;
 };
+
+export const updateData = async (driverRank: DriverRank) => {
+  return await update(driverRank);
+}
