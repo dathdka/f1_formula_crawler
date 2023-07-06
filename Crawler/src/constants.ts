@@ -32,6 +32,13 @@ const crawlSelector = {
   FASTEST_LAPS_TIME_OF_DAY: "td:nth-child(7)",
   FASTEST_LAPS_TIME: "td:nth-child(8)",
   FASTEST_LAPS_AVERAGE_SPEED: "td:nth-child(9)",
+  QUALIFYING_RESULT: "body > div.site-wrapper > main > article > div > div.ResultArchiveContainer > div.resultsarchive-wrapper > div.resultsarchive-content.group > div.resultsarchive-col-right > table > tbody > tr",
+  QUALIFYING_DRIVER_FIRST_NAME: "td:nth-child(4) > span.hide-for-tablet",
+  QUALIFYING_DRIVER_LAST_NAME: "td:nth-child(4) > span.hide-for-mobile",
+  QUALIFYING_Q1: "td:nth-child(6)",
+  QUALIFYING_Q2: "td:nth-child(7)",
+  QUALIFYING_Q3: "td:nth-child(8)",
+  QUALIFYING_LAPS: "td.semi-bold.hide-for-mobile",
   SEASON_URLS:
     "body > div.site-wrapper > main > article > div > div.ResultArchiveContainer > div.resultsarchive-filter-container > div:nth-child(1) > ul > li > a",
   RACE_URLS:

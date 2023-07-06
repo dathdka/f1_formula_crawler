@@ -37,6 +37,6 @@ export const startCrawl = async () => {
   } catch (error) {
     console.log(error);
   } finally {
-    // await browser.close();
+    await browser.close();
   }
 };

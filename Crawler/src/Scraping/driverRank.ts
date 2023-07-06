@@ -6,6 +6,7 @@ import { formatDate } from "../Utils/formatDate";
 import { createNew } from "../Service/driver_rank";
 import moment from "moment";
 import { fastestLaps } from "./fastest_laps";
+import { qualifying } from "./qualifying";
 const CRAWL_SELECTOR = require("../constants").CRAWL;
 
 const getResults = async (
@@ -107,7 +108,7 @@ export const driverRank = async (
   let driverRanks : DriverRank[] = []
   for (let raceUrl of raceUrls) {
     try {
-      driverRanks = [...await getResults(page, raceUrl, seasonRaces, seasonDrivers)];
+      driverRanks.push(...await getResults(page, raceUrl, seasonRaces, seasonDrivers));
     } catch (error) {
       continue;
     }
@@ -115,7 +116,8 @@ export const driverRank = async (
   for (let raceUrl of raceUrls) {
     try {
       await fastestLaps(page, raceUrl, seasonRaces, seasonDrivers, driverRanks);
-    } catch (error) {
+      await qualifying(page, raceUrl, seasonRaces, seasonDrivers, driverRanks);
+    } catch (error) {    
       continue;
     }
   }

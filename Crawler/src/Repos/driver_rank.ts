@@ -21,6 +21,6 @@ export const update = async (driverRank: DriverRank) =>
   (
     await driver_rank
       .query()
-      .findById(driverRank.id || "")
+      .updateAndFetchById(+`${driverRank.id}`,driverRank)
       .withGraphFetched("[driver, race, pit_stop, qualifying, fastest_laps]")
   )?.toJSON();

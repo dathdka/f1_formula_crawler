@@ -59,6 +59,7 @@ export const fastestLaps = async (
         (raceDate) => raceDate.textContent
       )
     );
+    
 
     const race_id = seasonRaces.find((seasonRace) => {
       const formatedDate = moment(seasonRace.race?.date).format("MM/DD/YYYY");
@@ -68,12 +69,14 @@ export const fastestLaps = async (
     const driver_id = seasonDrivers.find((seasonDriver) => {
       return seasonDriver.driver?.name === `${firstName} ${lastName}`;
     })?.id;
-
+    
+    
     const driverRank = driverRanks.find((driverRank) => {
       return (
         driverRank.driver_id === driver_id && driverRank.race_id === race_id
       );
     });
+    
 
     const fastestLapsResult: FastestLap = {
       fastest_lap,
@@ -83,9 +86,8 @@ export const fastestLaps = async (
     };
     
     const newFastestLapRecord = await createNew(fastestLapsResult) as FastestLap ;
-    
     if (driverRank) {
-      driverRank.fastest_lap_id = newFastestLapRecord.id;
+      driverRank.fastest_lap_id = newFastestLapRecord.id;      
       await updateData(driverRank);
     }
   }
