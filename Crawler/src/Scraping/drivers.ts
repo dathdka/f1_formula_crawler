@@ -2,6 +2,7 @@ import { Page } from "puppeteer";
 import { Driver } from "../types/Driver";
 import { createNew } from "../Service/drivers";
 import { getSeasonDriver } from "./seasonDriver";
+import { SeasonDriver } from "types/SeasonDriver";
 const CRAWL_SELECTOR = require("../constants").CRAWL;
 
 export const getDriver = async (page: Page, raceUrl: string) => {
@@ -9,6 +10,7 @@ export const getDriver = async (page: Page, raceUrl: string) => {
   await page.goto(driverUrl);
   await page.waitForSelector(CRAWL_SELECTOR.DRIVER_INFO);
   const driverInfoElements = await page.$$(CRAWL_SELECTOR.DRIVER_INFO);
+  let seasonDriver : SeasonDriver[] = [] 
   for (let driverInfoElement of driverInfoElements) {
     const firstName = await driverInfoElement.$eval(
       CRAWL_SELECTOR.DRIVER_FIRST_NAME,
@@ -27,6 +29,7 @@ export const getDriver = async (page: Page, raceUrl: string) => {
       nationality: nationality,
     };    
     const newDriver = await createNew(driver) as Driver;
-    await getSeasonDriver(page, newDriver);
+    seasonDriver.push(await getSeasonDriver(page, newDriver));
   }
+  return seasonDriver;
 };

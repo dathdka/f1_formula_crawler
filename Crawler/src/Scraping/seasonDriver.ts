@@ -25,5 +25,5 @@ export const getSeasonDriver = async (page: Page, driver: Driver) => {
     driver_id: driver.id,
     car: car,
   };
-  await createNew(seasonDriver);
+  return await createNew(seasonDriver) as SeasonDriver;
 };

@@ -4,6 +4,8 @@ import { Race } from "../types/Race";
 import { formatDate } from "../Utils/formatDate";
 import { createNew as createNewRace } from "../Service/races";
 import { createNew as createNewCircuit } from "../Service/circuits";
+import { getSeasonRace } from "./seasonRace";
+import { SeasonRace } from "types/SeasonRace";
 const CRAWL_SELECTOR = require("../constants").CRAWL;
 
 const storeRacesAndCircuits = async (race: Race, circuit: Circuit) => {
@@ -26,6 +28,7 @@ export const getRacesAndCircuits = async (
       return { link: race.href, location: race.textContent.trim() };
     });
   });
+  let seasonRaces : SeasonRace[] = []
   for (let raceUrl of raceUrls) {
     await page.goto(raceUrl.link);
     await page.waitForSelector(CRAWL_SELECTOR.RACE_DATE);
@@ -38,7 +41,9 @@ export const getRacesAndCircuits = async (
     };
     let race: Race = await page.$eval(CRAWL_SELECTOR.RACE_DATE, (raceDate) => {
       return { date: raceDate.textContent };
-    });
+    });    
     const newRace = await storeRacesAndCircuits(race, circuit) as Race;
+    seasonRaces.push(await getSeasonRace(page, newRace));    
   }
+  return seasonRaces;
 };

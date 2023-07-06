@@ -2,6 +2,7 @@ import { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("driver_rank", (table) => {
+    table.increments("id").primary();
     table
       .integer("driver_id")
       .references("id")
@@ -14,12 +15,11 @@ export async function up(knex: Knex): Promise<void> {
       .inTable("season_race")
       .onUpdate("CASCADE")
       .onDelete("NO ACTION");
-    table.integer("postion");
+    table.integer("position");
     table.integer("points");
     table.integer("completed_laps");
     table.string("finish_time");
     table.integer("start_position");
-    table.primary(["driver_id", "race_id"]);
   });
 }
 
