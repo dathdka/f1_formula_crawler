@@ -4,9 +4,9 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("pit_stop", (table) => {
     table.increments("id").primary();
     table.integer("number_of_stops");
-    table.timestamp("time_of_day");
-    table.timestamp("time");
-    table.timestamp("total_time");
+    table.string("time_of_day");
+    table.string("time");
+    table.string("total_time");
   });
 }
 

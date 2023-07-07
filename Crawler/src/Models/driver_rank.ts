@@ -1,6 +1,6 @@
 import { Model } from "objection";
 
-export class rank extends Model {
+export class driver_rank extends Model {
   static get tableName() {
     return "driver_rank";
   }
@@ -39,7 +39,7 @@ export class rank extends Model {
           to: "qualifying.id",
         },
       },
-      fastest_lap: {
+      fastest_laps: {
         relation: Model.HasOneRelation,
         modelClass: `${__dirname}/fastest_lap`,
         join: {

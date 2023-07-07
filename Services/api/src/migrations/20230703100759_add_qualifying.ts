@@ -3,9 +3,9 @@ import { Knex } from "knex";
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("qualifying", (table) => {
     table.increments("id").primary();
-    table.timestamp("q1");
-    table.timestamp("q2");
-    table.timestamp("q3");
+    table.string("q1");
+    table.string("q2");
+    table.string("q3");
     table.integer("laps");
   });
 }

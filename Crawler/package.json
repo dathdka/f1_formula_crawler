@@ -11,8 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^20.3.3",
     "dotenv": "^16.3.1",
     "knex": "^2.4.2",
+    "moment": "^2.29.4",
     "objection": "^3.0.4",
     "pg": "^8.11.1",
     "puppeteer": "^20.7.4"
