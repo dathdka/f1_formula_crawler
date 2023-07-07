@@ -1,18 +1,12 @@
 import { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
-  return knex.schema.createTable("season_driver", (table) => {
-    table.increments("id").primary();
+  return knex.schema.createTable("team_rank", (table) => {
+    table.increments('id').primary();
     table
-      .integer("season_id")
+      .integer("team_id")
       .references("id")
-      .inTable("seasons")
-      .onUpdate("CASCADE")
-      .onDelete("NO ACTION");
-    table
-      .integer("driver_id")
-      .references("id")
-      .inTable("drivers")
+      .inTable("season_team")
       .onUpdate("CASCADE")
       .onDelete("NO ACTION");
     table
@@ -21,10 +15,10 @@ export async function up(knex: Knex): Promise<void> {
       .inTable("cars")
       .onUpdate("CASCADE")
       .onDelete("NO ACTION");
-    table.integer("number");
+    table.integer("points");
   });
 }
 
 export async function down(knex: Knex): Promise<void> {
-  return knex.schema.dropTable("season_driver");
+  return knex.schema.dropTable("team_rank");
 }
