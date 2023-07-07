@@ -10,9 +10,9 @@ export async function up(knex: Knex): Promise<void> {
       .onUpdate("CASCADE")
       .onDelete("NO ACTION");
     table
-      .integer("race_id")
+      .integer("car_id")
       .references("id")
-      .inTable("season_race")
+      .inTable("cars")
       .onUpdate("CASCADE")
       .onDelete("NO ACTION");
     table.integer("points");

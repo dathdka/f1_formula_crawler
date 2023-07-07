@@ -15,8 +15,13 @@ export async function up(knex: Knex): Promise<void> {
       .inTable("drivers")
       .onUpdate("CASCADE")
       .onDelete("NO ACTION");
-    table.string("car");
-    table.integer('number')
+    table
+      .integer("car_id")
+      .references("id")
+      .inTable("cars")
+      .onUpdate("CASCADE")
+      .onDelete("NO ACTION");
+    table.integer("number");
   });
 }
 
