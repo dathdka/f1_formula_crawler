@@ -1,3 +1,9 @@
 const initializeKnex = require('./initialize/knex')
+import { startCrawl } from "./Scraping"
 
-initializeKnex()
+const app = async () => {
+    initializeKnex();
+    await startCrawl();
+}
+
+app()

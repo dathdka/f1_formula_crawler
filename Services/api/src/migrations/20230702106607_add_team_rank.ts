@@ -2,7 +2,7 @@ import { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("team_rank", (table) => {
-    table.increments('id').primary();
+    table.increments("id").primary();
     table
       .integer("team_id")
       .references("id")

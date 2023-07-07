@@ -23,12 +23,20 @@ export class season_race extends Model {
           to: "races.id",
         },
       },
-      rank: {
+      driver_rank: {
         relation: Model.HasManyRelation,
-        modelClass: `${__dirname}/rank`,
+        modelClass: `${__dirname}/driver_rank`,
         join: {
           from: "season_race.id",
-          to: "rank.race_id",
+          to: "driver_rank.race_id",
+        },
+      },
+      team_rank: {
+        relation: Model.HasManyRelation,
+        modelClass: `${__dirname}/team_rank`,
+        join: {
+          from: "season_race.id",
+          to: "team_rank.race_id",
         },
       },
     };

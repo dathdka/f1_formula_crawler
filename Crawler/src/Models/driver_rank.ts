@@ -1,8 +1,8 @@
 import { Model } from "objection";
 
-export class rank extends Model {
+export class driver_rank extends Model {
   static get tableName() {
-    return "rank";
+    return "driver_rank";
   }
 
   static get relationMappings() {
@@ -11,7 +11,7 @@ export class rank extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: `${__dirname}/season_driver`,
         join: {
-          from: "rank.driver_id",
+          from: "driver_rank.driver_id",
           to: "season_driver.id",
         },
       },
@@ -19,7 +19,7 @@ export class rank extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: `${__dirname}/season_race`,
         join: {
-          from: "rank.race_id",
+          from: "driver_rank.race_id",
           to: "season_race.id",
         },
       },
@@ -27,7 +27,7 @@ export class rank extends Model {
         relation: Model.HasOneRelation,
         modelClass: `${__dirname}/pit_stop`,
         join: {
-          from: "rank.pit_stop_id",
+          from: "driver_rank.pit_stop_id",
           to: "pit_stop.id",
         },
       },
@@ -35,15 +35,15 @@ export class rank extends Model {
         relation: Model.HasOneRelation,
         modelClass: `${__dirname}/qualifying`,
         join: {
-          from: "rank.qualifying_id",
+          from: "driver_rank.qualifying_id",
           to: "qualifying.id",
         },
       },
-      fastest_lap: {
+      fastest_laps: {
         relation: Model.HasOneRelation,
         modelClass: `${__dirname}/fastest_lap`,
         join: {
-          from: "rank.fastest_lap_id",
+          from: "driver_rank.fastest_lap_id",
           to: "fastest_lap.id",
         },
       },

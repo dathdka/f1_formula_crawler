@@ -15,7 +15,7 @@ export async function up(knex: Knex): Promise<void> {
       .inTable("season_race")
       .onUpdate("CASCADE")
       .onDelete("NO ACTION");
-    table.integer("postion");
+    table.integer("position");
     table.integer("points");
     table.integer("completed_laps");
     table.string("finish_time");

@@ -9,10 +9,10 @@ export class fastest_lap extends Model {
     return {
       rank: {
         relation: Model.BelongsToOneRelation,
-        modelClass: `${__dirname}/rank`,
+        modelClass: `${__dirname}/driver_rank`,
         join: {
           from: "fastest_lap.id",
-          to: "rank.fastest_lap_id",
+          to: "driver_rank.fastest_lap_id",
         },
       },
     };
