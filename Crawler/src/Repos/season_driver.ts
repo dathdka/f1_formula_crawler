@@ -16,3 +16,12 @@ export const create = async (seasonDriver: SeasonDriver) =>
       .insert(seasonDriver)
       .withGraphFetched("[season, driver]")
   ).toJSON();
+
+export const update = async (seasonDriver: SeasonDriver) => {
+  (
+    await season_driver
+      .query()
+      .patchAndFetchById(+`${seasonDriver.id}`, seasonDriver)
+      .withGraphFetched("[season, driver]")
+  ).toJSON();
+};

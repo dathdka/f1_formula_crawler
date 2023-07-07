@@ -1,12 +1,14 @@
 import { Page } from "puppeteer";
+import moment from "moment";
 import { SeasonDriver } from "../types/SeasonDriver";
 import { SeasonRace } from "../types/SeasonRace";
 import { DriverRank } from "../types/DriverRank";
 import { formatDate } from "../Utils/formatDate";
-import { createNew } from "../Service/driver_rank";
-import moment from "moment";
+import { createNew, updateData } from "../Service/driver_rank";
+import { update } from "../Repos/season_driver";
 import { fastestLaps } from "./fastest_laps";
 import { qualifying } from "./qualifying";
+import { pitStop } from "./pitStop";
 const CRAWL_SELECTOR = require("../constants").CRAWL;
 
 const getResults = async (
@@ -21,7 +23,7 @@ const getResults = async (
 
   if (resultElements.length === 0) throw new Error("no element found");
 
-  let driverRanks : DriverRank[] = [];
+  let driverRanks: DriverRank[] = [];
   for (let resultElement of resultElements) {
     const position = await resultElement.$eval(
       CRAWL_SELECTOR.DRIVER_POSITION,
@@ -70,12 +72,12 @@ const getResults = async (
       return formatedDate == raceDate;
     })?.id;
 
-    const driver_id = seasonDrivers.find((seasonDriver) => {
+    const driver = seasonDrivers.find((seasonDriver) => {
       return seasonDriver.driver?.name === `${firstName} ${lastName}`;
-    })?.id;
+    });
 
     const driverRank: DriverRank = {
-      driver_id,
+      driver_id: driver?.id,
       race_id,
       position,
       points,
@@ -83,9 +85,70 @@ const getResults = async (
       finish_time,
     };
 
-    driverRanks.push(await createNew(driverRank) as DriverRank);
+    driverRanks.push((await createNew(driverRank)) as DriverRank);
+    if (driver) {
+      driver.number = number;
+      await update(driver as SeasonDriver);
+    }
   }
   return driverRanks;
+};
+
+const getStartGrid = async (
+  page: Page,
+  raceUrl: string,
+  seasonRaces: SeasonRace[],
+  seasonDrivers: SeasonDriver[],
+  driverRanks: DriverRank[]
+) => {
+  const startGridUrl = raceUrl.replace("race-result", "starting-grid");
+  await page.goto(startGridUrl);
+  const startGridElements = await page.$$(CRAWL_SELECTOR.START_GRID_INFO);
+
+  if (startGridElements.length === 0) throw new Error("no element found");
+  for (let startGridElement of startGridElements) {
+    const firstName = await startGridElement.$eval(
+      CRAWL_SELECTOR.START_GRID_FIRST_NAME,
+      (firstName) => firstName.textContent
+    );
+
+    const lastName = await startGridElement.$eval(
+      CRAWL_SELECTOR.START_GRID_LAST_NAME,
+      (lastName) => lastName.textContent
+    );
+
+    const position = await startGridElement.$eval(
+      CRAWL_SELECTOR.START_GRID_POSITION,
+      (position) => position.textContent
+    );
+
+    const raceDate = formatDate(
+      await page.$eval(
+        CRAWL_SELECTOR.RACE_DATE,
+        (raceDate) => raceDate.textContent
+      )
+    );
+
+    const race_id = seasonRaces.find((seasonRace) => {
+      const formatedDate = moment(seasonRace.race?.date).format("MM/DD/YYYY");
+      return formatedDate == raceDate;
+    })?.id;
+
+    const driver_id = seasonDrivers.find((seasonDriver) => {
+      return seasonDriver.driver?.name === `${firstName} ${lastName}`;
+    })?.id;
+
+    const driverRank = driverRanks.find((driverRank) => {
+      return (
+        driverRank.driver_id === driver_id && driverRank.race_id === race_id
+      );
+    });
+
+    if (driverRank) {
+      driverRank.start_position = +`${position}`;
+      await updateData(driverRank);
+    }
+  }
 };
 
 export const driverRank = async (
@@ -95,7 +158,6 @@ export const driverRank = async (
   seasonDrivers: SeasonDriver[]
 ) => {
   await page.goto(seasonUrl);
-  
   await page.waitForSelector(CRAWL_SELECTOR.RACE_URLS);
 
   const raceUrls = await page.$$eval(CRAWL_SELECTOR.RACE_URLS, (races) => {
@@ -105,11 +167,19 @@ export const driverRank = async (
     });
   });
 
-  let driverRanks : DriverRank[] = []
+  let driverRanks: DriverRank[] = [];
   for (let raceUrl of raceUrls) {
     try {
-      driverRanks.push(...await getResults(page, raceUrl, seasonRaces, seasonDrivers));
+      driverRanks.push(...(await getResults(page, raceUrl, seasonRaces, seasonDrivers)));
+      await getStartGrid(
+        page,
+        raceUrl,
+        seasonRaces,
+        seasonDrivers,
+        driverRanks
+      );
     } catch (error) {
+      console.log(error);
       continue;
     }
   }
@@ -117,7 +187,8 @@ export const driverRank = async (
     try {
       await fastestLaps(page, raceUrl, seasonRaces, seasonDrivers, driverRanks);
       await qualifying(page, raceUrl, seasonRaces, seasonDrivers, driverRanks);
-    } catch (error) {    
+      await pitStop(page, raceUrl, seasonRaces, seasonDrivers, driverRanks);
+    } catch (error) {
       continue;
     }
   }

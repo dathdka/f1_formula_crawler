@@ -1,5 +1,5 @@
 import { SeasonDriver } from "../types/SeasonDriver";
-import { findBySeasonDriver, create } from "../Repos/season_driver";
+import { findBySeasonDriver, create, update } from "../Repos/season_driver";
 
 export const createNew = async (seasonDriver: SeasonDriver) => {
   const seasonDriverAlreadyExists = await findBySeasonDriver(seasonDriver);
@@ -8,3 +8,7 @@ export const createNew = async (seasonDriver: SeasonDriver) => {
   }
   return seasonDriverAlreadyExists;
 };
+
+export const updateData = async (seasonDriver: SeasonDriver) => {
+  return await update(seasonDriver);
+}
