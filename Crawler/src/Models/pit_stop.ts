@@ -11,8 +11,8 @@ export class pit_stop extends Model {
         relation: Model.BelongsToOneRelation,
         modelClass: `${__dirname}/driver_rank`,
         join: {
-          from: "pit_stop.id",
-          to: "driver_rank.pit_stop_id",
+          from: "pit_stop.driver_rank_id",
+          to: "driver_rank.id",
         },
       },
     };

@@ -8,6 +8,5 @@ export interface DriverRank {
     finish_time: string;
     start_position?: number;
     fastest_lap_id?: number;
-    pit_stop_id?: number;
     qualifying_id?: number;
 }

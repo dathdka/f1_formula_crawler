@@ -9,12 +9,6 @@ export async function up(knex: Knex): Promise<void> {
       .onUpdate("CASCADE")
       .onDelete("NO ACTION");
     table
-      .integer("pit_stop_id")
-      .references("id")
-      .inTable("pit_stop")
-      .onUpdate("CASCADE")
-      .onDelete("NO ACTION");
-    table
       .integer("qualifying_id")
       .references("id")
       .inTable("qualifying")
