@@ -16,7 +16,7 @@ export async function up(knex: Knex): Promise<void> {
       .onUpdate("CASCADE")
       .onDelete("NO ACTION");
     table.integer("position");
-    table.integer("points");
+    table.decimal("points");
     table.integer("completed_laps");
     table.string("finish_time");
     table.integer("start_position");

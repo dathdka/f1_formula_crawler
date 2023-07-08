@@ -1,13 +1,11 @@
 import { startBrowser } from "../Initialize/puppeteer";
-import { Page } from "puppeteer";
 import { createNew } from "../Service/seasons";
-import { Season } from "types/Season";
 import { getRacesAndCircuits } from "./racesAndCircuits";
+import { getTeamsAndTeamRank } from "./teamsAndTeamRank";
 import { getDriver } from "./drivers";
 import { getSeasons } from "./seasons";
 import { SeasonRace } from "types/SeasonRace";
 import { SeasonDriver } from "types/SeasonDriver";
-import moment from "moment";
 import { driverRank } from "./driverRank";
 const CRAWL_SELECTOR = require("../constants").CRAWL;
 
@@ -25,17 +23,15 @@ export const startCrawl = async () => {
     const seasonsInfo = await getSeasons(page);
     let seasonRaces: SeasonRace[] = [];
     let seasonDriver: SeasonDriver[] = [];
-    const driverPage = await browser.newPage();
     for (let season of seasonsInfo) {
-      await createNew(season.name);      
+      await createNew(season.name);
       seasonRaces = [...(await getRacesAndCircuits(season.link, page))];
-      seasonDriver = [...(await getDriver(driverPage, season.link))];
+      seasonDriver = [...(await getDriver(page, season.link))];
       await driverRank(page, season.link, seasonRaces, seasonDriver);
+      await getTeamsAndTeamRank(page, season.link);
     }
-
-    await driverPage.close();
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   } finally {
     await browser.close();
   }

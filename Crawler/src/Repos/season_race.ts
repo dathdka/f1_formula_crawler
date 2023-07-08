@@ -6,7 +6,7 @@ export const findBySeasonRace = async (seasonRace: SeasonRace) =>
     await season_race
       .query()
       .findOne(seasonRace)
-      .withGraphFetched("[season, race]")
+      .withGraphFetched("[season, race, driver_rank]")
   )?.toJSON();
 
 export const create = async (seasonRace: SeasonRace) =>
@@ -14,5 +14,5 @@ export const create = async (seasonRace: SeasonRace) =>
     await season_race
       .query()
       .insert(seasonRace)
-      .withGraphFetched("[season, race]")
+      .withGraphFetched("[season, race, driver_rank]")
   ).toJSON();

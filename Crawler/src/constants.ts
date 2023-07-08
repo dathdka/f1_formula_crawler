@@ -5,6 +5,9 @@ const crawlSelector = {
   COOKIES_CONFIRM:
     "#truste-consent-track > div.trustarc-banner-section > div.trustarc-banner-container",
   ACCEPT_COOKIES_BUTTON: "#truste-consent-button",
+  TEAM_RESULTS : "body > div.site-wrapper > main > article > div > div.ResultArchiveContainer > div.resultsarchive-wrapper > div.resultsarchive-content > div > table > tbody > tr",
+  TEAM_NAME : "td:nth-child(3) > a",
+  TEAM_POINTS: "td.dark.bold",
   RACE_DATE:
     "body > div.site-wrapper > main > article > div > div.ResultArchiveContainer > div.resultsarchive-wrapper > div.resultsarchive-content-header.group > p > .full-date",
   CIRCUIT_NAME:
@@ -14,7 +17,7 @@ const crawlSelector = {
   DRIVER_FIRST_NAME: "td:nth-child(3) > a > span.hide-for-tablet",
   DRIVER_LAST_NAME: "td:nth-child(3) > a > span.hide-for-mobile",
   DRIVER_NATIONALITY: "td.dark.semi-bold.uppercase",
-  DRIVER_CAR: "td:nth-child(5) > a",
+  DRIVER_CAR: "td:nth-child(5)",
   DRIVER_RESULTS:
     "body > div.site-wrapper > main > article > div > div.ResultArchiveContainer > div.resultsarchive-wrapper > div.resultsarchive-content.group > div.resultsarchive-col-right > table > tbody > tr",
   DRIVER_POSITION: "td:nth-child(2)",
@@ -47,8 +50,8 @@ const crawlSelector = {
   PIT_STOP_RESULT:
     "body > div.site-wrapper > main > article > div > div.ResultArchiveContainer > div.resultsarchive-wrapper > div.resultsarchive-content.group > div.resultsarchive-col-right > table > tbody > tr",
   PIT_STOP_DRIVER_FIRST_NAME:
-    "td:nth-child(4) > .first-name",
-  PIT_STOP_DRIVER_LAST_NAME: "td:nth-child(4) > .last-name",
+    "td:nth-child(4) > .hide-for-mobile",
+  PIT_STOP_DRIVER_LAST_NAME: "td:nth-child(4) > .hide-for-tablet",
   PIT_STOP_NUMBER_OF_STOP: "td:nth-child(2)",
   PIT_STOP_TIME: "td:nth-child(8)",
   PIT_STOP_TIME_OF_DAY: "td.dark.bold.hide-for-mobile",

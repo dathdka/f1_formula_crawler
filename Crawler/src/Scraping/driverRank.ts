@@ -1,14 +1,18 @@
 import { Page } from "puppeteer";
 import moment from "moment";
+
 import { SeasonDriver } from "../types/SeasonDriver";
 import { SeasonRace } from "../types/SeasonRace";
 import { DriverRank } from "../types/DriverRank";
-import { formatDate } from "../Utils/formatDate";
-import { createNew, updateData } from "../Service/driver_rank";
-import { update } from "../Repos/season_driver";
+
+import { createNew, updateData as driverRankUpdate } from "../Service/driver_rank";
+import { updateData as seasonDriverUpdate } from "../Service/season_driver";
+
 import { fastestLaps } from "./fastest_laps";
 import { qualifying } from "./qualifying";
 import { pitStop } from "./pitStop";
+
+import { formatDate } from "../Utils/formatDate";
 const CRAWL_SELECTOR = require("../constants").CRAWL;
 
 const getResults = async (
@@ -72,12 +76,12 @@ const getResults = async (
       return formatedDate == raceDate;
     })?.id;
 
-    const driver = seasonDrivers.find((seasonDriver) => {
+    const seasonDriver = seasonDrivers.find((seasonDriver) => {
       return seasonDriver.driver?.name === `${firstName} ${lastName}`;
     });
 
     const driverRank: DriverRank = {
-      driver_id: driver?.id,
+      driver_id: seasonDriver?.id,
       race_id,
       position,
       points,
@@ -86,9 +90,9 @@ const getResults = async (
     };
 
     driverRanks.push((await createNew(driverRank)) as DriverRank);
-    if (driver) {
-      driver.number = number;
-      await update(driver as SeasonDriver);
+    if (seasonDriver) {
+      seasonDriver.number = number;
+      await seasonDriverUpdate(seasonDriver);
     }
   }
   return driverRanks;
@@ -146,7 +150,7 @@ const getStartGrid = async (
 
     if (driverRank) {
       driverRank.start_position = +`${position}`;
-      await updateData(driverRank);
+      await driverRankUpdate(driverRank);
     }
   }
 };

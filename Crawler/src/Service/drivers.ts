@@ -1,5 +1,5 @@
 import { Driver } from "../types/Driver";
-import { findByNameAndNationaly, create } from "../Repos/drivers";
+import { findByNameAndNationaly, create, update } from "../Repos/drivers";
 
 export const createNew = async (driver: Driver) => {
   const driverAlreadyExists = await findByNameAndNationaly(driver);
@@ -9,3 +9,5 @@ export const createNew = async (driver: Driver) => {
   }
   return driverAlreadyExists;
 };
+
+export const updateData = async (driver: Driver) => await update(driver);
