@@ -31,6 +31,14 @@ export class season_team extends Model {
           to: "teams.id",
         },
       },
+      car: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: `${__dirname}/cars`,
+        join: {
+          from : 'season_team.car_id',
+          to : 'cars.id'
+        }
+      }
     };
   }
 }
