@@ -14,7 +14,7 @@ export class drivers extends Model {
           from: "drivers.id",
           through: {
             from: "season_driver.driver_id",
-            to: "season_driver.team_id",
+            to: "season_driver.season_id",
           },
           to: "seasons.id",
         },

@@ -75,6 +75,8 @@ export const pitStop = async (
       );
     });
 
+
+
     const pitStopResult: PitStop = {
       time,
       time_of_day,
@@ -84,6 +86,10 @@ export const pitStop = async (
 
     const newPitStopRecord = (await createNew(pitStopResult)) as PitStop;
 
+    if(!driverRank){
+      console.log(`${firstName} ${lastName}`);
+      console.log('season driver',seasonDrivers);
+    }
     if (driverRank) {
       driverRank.pit_stop_id = newPitStopRecord.id;
       await updateData(driverRank);

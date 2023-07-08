@@ -24,12 +24,18 @@ export const getDriver = async (page: Page, raceUrl: string) => {
       CRAWL_SELECTOR.DRIVER_NATIONALITY,
       (nationality) => nationality.textContent
     );
+
+    const carName = await driverInfoElement?.$eval(
+      CRAWL_SELECTOR.DRIVER_CAR,
+      (carName) => carName.textContent.trim()
+    );
+    
     const driver: Driver = {
       name: `${firstName} ${lastName}`,
       nationality: nationality,
     };    
     const newDriver = await createNew(driver) as Driver;
-    seasonDriver.push(await getSeasonDriver(page, newDriver));
+    seasonDriver.push(await getSeasonDriver(page, newDriver, carName));
   }
   return seasonDriver;
 };

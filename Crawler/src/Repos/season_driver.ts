@@ -14,7 +14,7 @@ export const create = async (seasonDriver: SeasonDriver) =>
     await season_driver
       .query()
       .insert(seasonDriver)
-      .withGraphFetched("[season, driver]")
+      .withGraphFetched("[season, driver, car, rank]")
   ).toJSON();
 
 export const update = async (seasonDriver: SeasonDriver) => {
@@ -22,6 +22,6 @@ export const update = async (seasonDriver: SeasonDriver) => {
     await season_driver
       .query()
       .patchAndFetchById(+`${seasonDriver.id}`, seasonDriver)
-      .withGraphFetched("[season, driver]")
+      .withGraphFetched("[season, driver, car, rank]")
   ).toJSON();
 };
