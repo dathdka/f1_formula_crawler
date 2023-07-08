@@ -31,14 +31,6 @@ export class season_race extends Model {
           to: "driver_rank.race_id",
         },
       },
-      team_rank: {
-        relation: Model.HasManyRelation,
-        modelClass: `${__dirname}/team_rank`,
-        join: {
-          from: "season_race.id",
-          to: "team_rank.race_id",
-        },
-      },
     };
   }
 }

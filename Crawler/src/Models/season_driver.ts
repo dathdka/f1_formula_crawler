@@ -23,6 +23,14 @@ export class season_driver extends Model {
           to: "drivers.id",
         },
       },
+      car: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: `${__dirname}/cars`,
+        join: {
+          from: 'season_driver.car_id',
+          to: 'cars.id'
+        }
+      },
       rank: {
         relation: Model.BelongsToOneRelation,
         modelClass: `${__dirname}/driver_rank`,

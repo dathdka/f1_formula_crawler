@@ -9,12 +9,6 @@ export async function up(knex: Knex): Promise<void> {
       .inTable("season_team")
       .onUpdate("CASCADE")
       .onDelete("NO ACTION");
-    table
-      .integer("car_id")
-      .references("id")
-      .inTable("cars")
-      .onUpdate("CASCADE")
-      .onDelete("NO ACTION");
     table.integer("points");
   });
 }
