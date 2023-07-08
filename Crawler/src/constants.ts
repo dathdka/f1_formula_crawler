@@ -50,8 +50,8 @@ const crawlSelector = {
   PIT_STOP_RESULT:
     "body > div.site-wrapper > main > article > div > div.ResultArchiveContainer > div.resultsarchive-wrapper > div.resultsarchive-content.group > div.resultsarchive-col-right > table > tbody > tr",
   PIT_STOP_DRIVER_FIRST_NAME:
-    "td:nth-child(4) > .hide-for-mobile",
-  PIT_STOP_DRIVER_LAST_NAME: "td:nth-child(4) > .hide-for-tablet",
+    "td:nth-child(4) > .hide-for-tablet",
+  PIT_STOP_DRIVER_LAST_NAME: "td:nth-child(4) > .hide-for-mobile",
   PIT_STOP_NUMBER_OF_STOP: "td:nth-child(2)",
   PIT_STOP_TIME: "td:nth-child(8)",
   PIT_STOP_TIME_OF_DAY: "td.dark.bold.hide-for-mobile",

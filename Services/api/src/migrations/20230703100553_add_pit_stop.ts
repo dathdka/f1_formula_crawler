@@ -7,6 +7,12 @@ export async function up(knex: Knex): Promise<void> {
     table.string("time_of_day");
     table.string("time");
     table.string("total_time");
+    table
+    .integer("driver_rank_id")
+    .references("id")
+    .inTable("driver_rank")
+    .onUpdate("CASCADE")
+    .onDelete("NO ACTION");
   });
 }
 

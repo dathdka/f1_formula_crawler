@@ -31,7 +31,7 @@ export const startCrawl = async () => {
       await getTeamsAndTeamRank(page, season.link);
     }
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   } finally {
     await browser.close();
   }

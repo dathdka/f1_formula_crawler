@@ -24,11 +24,11 @@ export class driver_rank extends Model {
         },
       },
       pit_stop: {
-        relation: Model.HasOneRelation,
+        relation: Model.HasManyRelation,
         modelClass: `${__dirname}/pit_stop`,
         join: {
-          from: "driver_rank.pit_stop_id",
-          to: "pit_stop.id",
+          from: "driver_rank.id",
+          to: "pit_stop.driver_rank_id",
         },
       },
       qualifying: {
