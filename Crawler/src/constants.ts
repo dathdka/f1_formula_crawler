@@ -38,7 +38,7 @@ const crawlSelector = {
   FASTEST_LAPS_LAP: "td:nth-child(6)",
   FASTEST_LAPS_TIME_OF_DAY: "td:nth-child(7)",
   FASTEST_LAPS_TIME: "td:nth-child(8)",
-  FASTEST_LAPS_AVERAGE_SPEED: "td:nth-child(9)",
+  FASTEST_LAPS_AVERAGE_SPEED: ".dark.bold",
   QUALIFYING_RESULT:
     "body > div.site-wrapper > main > article > div > div.ResultArchiveContainer > div.resultsarchive-wrapper > div.resultsarchive-content.group > div.resultsarchive-col-right > table > tbody > tr",
   QUALIFYING_DRIVER_FIRST_NAME: "td:nth-child(4) > span.hide-for-tablet",

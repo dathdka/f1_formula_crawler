@@ -24,66 +24,68 @@ export const pitStop = async (
   for (let pitStopResultElement of pitStopResultElements) {
     const firstName = await pitStopResultElement.$eval(
       CRAWL_SELECTOR.PIT_STOP_DRIVER_FIRST_NAME,
-      (firstName) => firstName.textContent
+      (firstName) => firstName.textContent.trim()
     );
 
     const lastName = await pitStopResultElement.$eval(
       CRAWL_SELECTOR.PIT_STOP_DRIVER_LAST_NAME,
-      (lastName) => lastName.textContent
+      (lastName) => lastName.textContent.trim()
     );
-      
+
     const number_of_stops = await pitStopResultElement.$eval(
       CRAWL_SELECTOR.PIT_STOP_NUMBER_OF_STOP,
-      (numberOfStop) => numberOfStop.textContent
+      (numberOfStop) => numberOfStop.textContent.trim()
     );
-    
 
     const time = await pitStopResultElement.$eval(
       CRAWL_SELECTOR.PIT_STOP_TIME,
-      (time) => time.textContent
+      (time) => time.textContent.trim()
     );
-      
-    const time_of_day = await pitStopResultElement.$eval(
-      CRAWL_SELECTOR.PIT_STOP_TIME_OF_DAY,
-      (timeOfDay) => timeOfDay.textContent
+
+    let time_of_day = "";
+    const timeOfDayElement = await pitStopResultElement.$(
+      CRAWL_SELECTOR.PIT_STOP_TIME_OF_DAY
     );
-      
+    if (timeOfDayElement) {
+      time_of_day = await pitStopResultElement.$eval(
+        CRAWL_SELECTOR.PIT_STOP_TIME_OF_DAY,
+        (timeOfDay) => timeOfDay.textContent.trim()
+      );
+    }
+
     const total_time = await pitStopResultElement.$eval(
       CRAWL_SELECTOR.PIT_STOP_TOTAL,
-      (totalTime) => totalTime.textContent
+      (totalTime) => totalTime.textContent.trim()
     );
-      
+
     const raceDate = formatDate(
-      await page.$eval(
-        CRAWL_SELECTOR.RACE_DATE,
-        (raceDate) => raceDate.textContent
+      await page.$eval(CRAWL_SELECTOR.RACE_DATE, (raceDate) =>
+        raceDate.textContent.trim()
       )
     );
-        
+
     const race_id = seasonRaces.find((seasonRace) => {
       const formatedDate = moment(seasonRace.race?.date).format("MM/DD/YYYY");
       return formatedDate == raceDate;
     })?.id;
-    
+
     const driver_id = seasonDrivers.find((seasonDriver) => {
       return seasonDriver.driver?.name === `${firstName} ${lastName}`;
     })?.id;
-    console.log('driver_id',driver_id);
-    
+
     const driverRank = driverRanks.find((driverRank) => {
       return (
         driverRank.driver_id === driver_id && driverRank.race_id === race_id
       );
     });
-    
+
     const pitStopResult: PitStop = {
       time,
       time_of_day,
       total_time,
       number_of_stops,
-      driver_rank_id : +`${driverRank?.id}`
-    };
-    console.log('pitStopResult',pitStopResult);
+      driver_rank_id: +`${driverRank?.id}`,
+    };    
 
     await createNew(pitStopResult);
   }

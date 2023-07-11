@@ -16,50 +16,61 @@ export const fastestLaps = async (
   seasonDrivers: SeasonDriver[],
   driverRanks: DriverRank[]
 ) => {
-  const fastestLapUrl = raceUrl.replace("race-result", "fastest-laps");  
-  await page.goto(fastestLapUrl);   
+  const fastestLapUrl = raceUrl.replace("race-result", "fastest-laps");
+  await page.goto(fastestLapUrl);
   const fastestLapsResultElements = await page.$$(
     CRAWL_SELECTOR.FASTEST_LAPS_RESULT
   );
-  if (fastestLapsResultElements.length === 0) throw new Error("no element found");
+  if (fastestLapsResultElements.length === 0)
+    throw new Error("no element found");
   for (let fastestLapsResultElement of fastestLapsResultElements) {
     const firstName = await fastestLapsResultElement.$eval(
       CRAWL_SELECTOR.FASTEST_LAPS_DRIVER_FIRST_NAME,
-      (firstName) => firstName.textContent
+      (firstName) => firstName.textContent.trim()
     );
-      
+
     const lastName = await fastestLapsResultElement.$eval(
       CRAWL_SELECTOR.FASTEST_LAPS_DRIVER_LAST_NAME,
-      (lastName) => lastName.textContent
+      (lastName) => lastName.textContent.trim()
     );
 
     const fastest_lap = await fastestLapsResultElement.$eval(
       CRAWL_SELECTOR.FASTEST_LAPS_LAP,
-      (fastestLap) => fastestLap.textContent
+      (fastestLap) => fastestLap.textContent.trim()
     );
 
-    const time_of_day = await fastestLapsResultElement.$eval(
-      CRAWL_SELECTOR.FASTEST_LAPS_TIME_OF_DAY,
-      (timeOfDay) => timeOfDay.textContent
+    let time_of_day = "";
+    const timeOfDayElement = await fastestLapsResultElement.$(
+      CRAWL_SELECTOR.FASTEST_LAPS_TIME_OF_DAY
     );
+    if (timeOfDayElement) {
+      time_of_day = await fastestLapsResultElement.$eval(
+        CRAWL_SELECTOR.FASTEST_LAPS_TIME_OF_DAY,
+        (timeOfDay) => timeOfDay.textContent.trim()
+      );
+    }
 
     const time = await fastestLapsResultElement.$eval(
       CRAWL_SELECTOR.FASTEST_LAPS_TIME,
-      (time) => time.textContent
+      (time) => time.textContent.trim()
     );
 
-    const average_speed = await fastestLapsResultElement.$eval(
+    const average_speed = await fastestLapsResultElement.$$eval(
       CRAWL_SELECTOR.FASTEST_LAPS_AVERAGE_SPEED,
-      (averageSpeed) => averageSpeed.textContent
+      (averageSpeed) => {
+        const speed = +averageSpeed.at(-1).textContent.trim();
+        if (Number.isNaN(speed)) {
+          return 0;
+        }
+        return speed;
+      }
     );
 
     const raceDate = formatDate(
-      await page.$eval(
-        CRAWL_SELECTOR.RACE_DATE,
-        (raceDate) => raceDate.textContent
+      await page.$eval(CRAWL_SELECTOR.RACE_DATE, (raceDate) =>
+        raceDate.textContent.trim()
       )
     );
-    
 
     const race_id = seasonRaces.find((seasonRace) => {
       const formatedDate = moment(seasonRace.race?.date).format("MM/DD/YYYY");
@@ -69,25 +80,25 @@ export const fastestLaps = async (
     const driver_id = seasonDrivers.find((seasonDriver) => {
       return seasonDriver.driver?.name === `${firstName} ${lastName}`;
     })?.id;
-    
-    
+
     const driverRank = driverRanks.find((driverRank) => {
       return (
         driverRank.driver_id === driver_id && driverRank.race_id === race_id
       );
     });
-    
 
     const fastestLapsResult: FastestLap = {
       fastest_lap,
       time,
       time_of_day,
       average_speed,
-    };
-    
-    const newFastestLapRecord = await createNew(fastestLapsResult) as FastestLap ;
+    };    
+
+    const newFastestLapRecord = (await createNew(
+      fastestLapsResult
+    )) as FastestLap;
     if (driverRank) {
-      driverRank.fastest_lap_id = newFastestLapRecord.id;      
+      driverRank.fastest_lap_id = newFastestLapRecord.id;
       await updateData(driverRank);
     }
   }

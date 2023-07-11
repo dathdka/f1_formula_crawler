@@ -36,11 +36,11 @@ export const getRacesAndCircuits = async (
       location: raceUrl.location,
       name: await page.$eval(
         CRAWL_SELECTOR.CIRCUIT_NAME,
-        (circuitName) => circuitName.textContent.split(",")[0]
+        (circuitName) => circuitName.textContent.trim().split(",")[0]
       ),
     };
     let race: Race = await page.$eval(CRAWL_SELECTOR.RACE_DATE, (raceDate) => {
-      return { date: raceDate.textContent };
+      return { date: raceDate.textContent.trim() };
     });    
     const newRace = await storeRacesAndCircuits(race, circuit) as Race;
     seasonRaces.push(await getSeasonRace(page, newRace));    

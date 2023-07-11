@@ -29,38 +29,51 @@ export const qualifying = async (
   for (let qualifyingResultElement of qualifyingResultElements) {
     const firstName = await qualifyingResultElement.$eval(
       CRAWL_SELECTOR.QUALIFYING_DRIVER_FIRST_NAME,
-      (firstName) => firstName.textContent
+      (firstName) => firstName.textContent.trim()
     );
 
     const lastName = await qualifyingResultElement.$eval(
       CRAWL_SELECTOR.QUALIFYING_DRIVER_LAST_NAME,
-      (lastName) => lastName.textContent
+      (lastName) => lastName.textContent.trim()
     );
 
-    const laps = await qualifyingResultElement.$eval(
-      CRAWL_SELECTOR.QUALIFYING_LAPS,
-      (qualifyingLaps) => qualifyingLaps.textContent
+    let laps = 0;
+    let q2 = '';
+    let q3 = '';
+    const lapsElement = await qualifyingResultElement.$(
+      CRAWL_SELECTOR.QUALIFYING_LAPS
     );
+    if (lapsElement){
+      laps = await qualifyingResultElement.$eval(
+        CRAWL_SELECTOR.QUALIFYING_LAPS,
+        (qualifyingLaps) => qualifyingLaps.textContent.trim()
+      );
+    }
 
     const q1 = await qualifyingResultElement.$eval(
       CRAWL_SELECTOR.QUALIFYING_Q1,
-      (q1) => q1.textContent
+      (q1) => q1.textContent.trim()
     );
 
-    const q2 = await qualifyingResultElement.$eval(
-      CRAWL_SELECTOR.QUALIFYING_Q2,
-      (q2) => q2.textContent
-    );
-
-    const q3 = await qualifyingResultElement.$eval(
-      CRAWL_SELECTOR.QUALIFYING_Q3,
-      (q3) => q3.textContent
-    );
+    const q2Element = await qualifyingResultElement.$(CRAWL_SELECTOR.QUALIFYING_Q2);
+    if(q2Element){
+      q2 = await qualifyingResultElement.$eval(
+        CRAWL_SELECTOR.QUALIFYING_Q2,
+        (q2) => q2.textContent.trim()
+      );
+    }
+     
+    const q3Element = await qualifyingResultElement.$(CRAWL_SELECTOR.QUALIFYING_Q3);
+    if(q3Element){
+      q3 = await qualifyingResultElement.$eval(
+        CRAWL_SELECTOR.QUALIFYING_Q3,
+        (q3) => q3.textContent.trim()
+      );
+    }
 
     const raceDate = formatDate(
-      await page.$eval(
-        CRAWL_SELECTOR.RACE_DATE,
-        (raceDate) => raceDate.textContent
+      await page.$eval(CRAWL_SELECTOR.RACE_DATE, (raceDate) =>
+        raceDate.textContent.trim()
       )
     );
 
@@ -84,14 +97,15 @@ export const qualifying = async (
       q1,
       q2,
       q3,
-    };    
+    };
+    
 
-    const newqualifyingLapRecord = (await createNew(
+    const newQualifyingLapRecord = (await createNew(
       qualifyingResult
     )) as FastestLap;
 
     if (driverRank) {
-      driverRank.qualifying_id = newqualifyingLapRecord.id;
+      driverRank.qualifying_id = newQualifyingLapRecord.id;
       await updateData(driverRank);
     }
   }
