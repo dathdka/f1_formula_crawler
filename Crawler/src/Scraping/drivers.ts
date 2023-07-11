@@ -14,15 +14,15 @@ export const getDriver = async (page: Page, raceUrl: string) => {
   for (let driverInfoElement of driverInfoElements) {
     const firstName = await driverInfoElement.$eval(
       CRAWL_SELECTOR.DRIVER_FIRST_NAME,
-      (firstName) => firstName.textContent
+      (firstName) => firstName.textContent.trim()
     );
     const lastName = await driverInfoElement.$eval(
       CRAWL_SELECTOR.DRIVER_LAST_NAME,
-      (lastName) => lastName.textContent
+      (lastName) => lastName.textContent.trim()
     );
     const nationality = await driverInfoElement.$eval(
       CRAWL_SELECTOR.DRIVER_NATIONALITY,
-      (nationality) => nationality.textContent
+      (nationality) => nationality.textContent.trim()
     );
 
     const carName = await driverInfoElement?.$eval(

@@ -20,12 +20,12 @@ export const getTeamsAndTeamRank = async (page: Page, seasonUrl: string) => {
   for (let teamResultElement of teamResultElements) {
     const name = await teamResultElement.$eval(
       CRAWL_SELECTOR.TEAM_NAME,
-      (name) => name.textContent
+      (name) => name.textContent.trim()
     );
     const teamRecord = (await teamCreate({ name })) as Team;
     const points = await teamResultElement.$eval(
       CRAWL_SELECTOR.TEAM_POINTS,
-      (points) => points.textContent
+      (points) => points.textContent.trim()
     );
     const seasonTeam: SeasonTeam = {
       team_id: +`${teamRecord.id}`,

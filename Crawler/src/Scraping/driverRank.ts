@@ -31,43 +31,43 @@ const getResults = async (
   for (let resultElement of resultElements) {
     const position = await resultElement.$eval(
       CRAWL_SELECTOR.DRIVER_POSITION,
-      (position) => +position.textContent || 0
+      (position) => +position.textContent.trim() || 0
     );
 
     const firstName = await resultElement.$eval(
       CRAWL_SELECTOR.DRIVER_RANK_FIRST_NAME,
-      (firstName) => firstName.textContent
+      (firstName) => firstName.textContent.trim()
     );
 
     const lastName = await resultElement.$eval(
       CRAWL_SELECTOR.DRIVER_RANK_LAST_NAME,
-      (lastName) => lastName.textContent
+      (lastName) => lastName.textContent.trim()
     );
 
     const number = await resultElement.$eval(
       CRAWL_SELECTOR.DRIVER_NUMBER,
-      (number) => +number.textContent || 0
+      (number) => +number.textContent.trim() || 0
     );
 
     const completed_laps = await resultElement.$eval(
       CRAWL_SELECTOR.DRIVER_COMPLETED_LAPS,
-      (completedLaps) => +completedLaps.textContent || 0
+      (completedLaps) => +completedLaps.textContent.trim() || 0
     );
 
     const finish_time = await resultElement.$eval(
       CRAWL_SELECTOR.DRIVER_FINISH_TIME,
-      (finishTime) => finishTime.textContent
+      (finishTime) => finishTime.textContent.trim()
     );
 
     const points = await resultElement.$eval(
       CRAWL_SELECTOR.DRIVER_POINTS,
-      (points) => +points.textContent || 0
+      (points) => +points.textContent.trim() || 0
     );
 
     const raceDate = formatDate(
       await page.$eval(
         CRAWL_SELECTOR.RACE_DATE,
-        (raceDate) => raceDate.textContent
+        (raceDate) => raceDate.textContent.trim()
       )
     );
 
@@ -76,9 +76,11 @@ const getResults = async (
       return formatedDate == raceDate;
     })?.id;
 
+    
     const seasonDriver = seasonDrivers.find((seasonDriver) => {
       return seasonDriver.driver?.name === `${firstName} ${lastName}`;
     });
+    
 
     const driverRank: DriverRank = {
       driver_id: seasonDriver?.id,
@@ -88,6 +90,7 @@ const getResults = async (
       completed_laps,
       finish_time,
     };
+    
 
     driverRanks.push((await createNew(driverRank)) as DriverRank);
     if (seasonDriver) {
@@ -113,23 +116,23 @@ const getStartGrid = async (
   for (let startGridElement of startGridElements) {
     const firstName = await startGridElement.$eval(
       CRAWL_SELECTOR.START_GRID_FIRST_NAME,
-      (firstName) => firstName.textContent
+      (firstName) => firstName.textContent.trim()
     );
 
     const lastName = await startGridElement.$eval(
       CRAWL_SELECTOR.START_GRID_LAST_NAME,
-      (lastName) => lastName.textContent
+      (lastName) => lastName.textContent.trim()
     );
 
     const position = await startGridElement.$eval(
       CRAWL_SELECTOR.START_GRID_POSITION,
-      (position) => position.textContent
+      (position) => position.textContent.trim()
     );
 
     const raceDate = formatDate(
       await page.$eval(
         CRAWL_SELECTOR.RACE_DATE,
-        (raceDate) => raceDate.textContent
+        (raceDate) => raceDate.textContent.trim()
       )
     );
 
@@ -193,6 +196,7 @@ export const driverRank = async (
       await qualifying(page, raceUrl, seasonRaces, seasonDrivers, driverRanks);
       await pitStop(page, raceUrl, seasonRaces, seasonDrivers, driverRanks);
     } catch (error) {
+      console.log(error);
       continue;
     }
   }
