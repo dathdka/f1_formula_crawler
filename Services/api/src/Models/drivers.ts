@@ -19,6 +19,18 @@ export class drivers extends Model {
           to: "seasons.id",
         },
       },
+      rank: {
+        relation: Model.ManyToManyRelation,
+        modelClass: `${__dirname}/driver_rank`,
+        join: {
+          from : "drivers.id",
+          through: {
+            from : "season_driver.driver_id",
+            to : "season_driver.id"
+          },
+          to: "driver_rank.driver_id"
+        }
+      }
     };
   }
 }
