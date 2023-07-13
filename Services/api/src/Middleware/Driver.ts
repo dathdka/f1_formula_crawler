@@ -1,6 +1,7 @@
+import { logger } from "../Initialize/logger";
 import { NextFunction, Request, Response } from "express";
 
-export const driverValidator = (
+export const driverMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -8,10 +9,11 @@ export const driverValidator = (
   const queryString = req.query as any;
   for (let comparator in queryString) {
     if (
-      comparator.match(/[^0-9a-z\@\/\.]/gi) ||
-      queryString[comparator].match(/[^0-9a-z\@\/\.]/gi)
+      comparator.match(/[^0-9a-z\@\/\.\_]/gi) ||
+      queryString[comparator].match(/[^0-9a-z\@\/\.\_\:]/gi)
     ) {
-      return res.status(400).send({ err: "invalid query" });
+      logger.info("Invalid query");
+      return res.status(400).send({ err: "Invalid query string" });
     }
   }
   next();
