@@ -7,7 +7,7 @@ export class driver_rank extends Model {
 
   static get relationMappings() {
     return {
-      driver: {
+      season_driver: {
         relation: Model.BelongsToOneRelation,
         modelClass: `${__dirname}/season_driver`,
         join: {
@@ -15,7 +15,7 @@ export class driver_rank extends Model {
           to: "season_driver.id",
         },
       },
-      race: {
+      season_race: {
         relation: Model.BelongsToOneRelation,
         modelClass: `${__dirname}/season_race`,
         join: {
