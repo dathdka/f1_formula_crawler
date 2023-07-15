@@ -28,11 +28,13 @@ export const parseQueryString = (queryString: any) => {
     return { conditions, page, limit };
   }
   for (let query in queryString) {
+    query = decodeURIComponent(query);
+    let value = decodeURIComponent(queryString[query]);
     if (query === "page") {
-      page = +queryString[query] || CONDITIONS.DEFAULT_PAGE;
+      page = +value || CONDITIONS.DEFAULT_PAGE;
       continue;
     } else if (query === "limit") {
-      limit = +queryString[query] || CONDITIONS.DEFAULT_LIMIT;
+      limit = +value || CONDITIONS.DEFAULT_LIMIT;
       continue;
     }
     let [columnName, operator] = query.split(".");
@@ -41,7 +43,7 @@ export const parseQueryString = (queryString: any) => {
     conditions.push({
       columnName: columnName ? columnName.replace(/[@]/g, ".") : "",
       operator,
-      value: parseValue(queryString[query], operator),
+      value: parseValue(value, operator),
     });
   }
 

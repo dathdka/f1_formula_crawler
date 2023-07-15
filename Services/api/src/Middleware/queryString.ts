@@ -1,7 +1,7 @@
 import { logger } from "../Initialize/logger";
 import { NextFunction, Request, Response } from "express";
 
-export const driverMiddleware = (
+export const queryStringMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction

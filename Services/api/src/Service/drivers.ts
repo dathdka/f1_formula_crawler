@@ -3,7 +3,7 @@ import { all, getById, getSeasonsById, getCarsById, getDriverCareerById } from "
 import { parseQueryString } from "../Utils/parseQueryString";
 import { logger } from "../Initialize/logger";
 
-const ERROR_MESSAGE = "something went wrong, please try again later";
+const ERROR = require("../constants").ERROR_MESSAGE;
 
 export const getAll = async (req: Request, res: Response) => {
   try {
@@ -13,7 +13,7 @@ export const getAll = async (req: Request, res: Response) => {
     return res.status(200).json(drivers);
   } catch (error: any) {
     logger.error(error.message);
-    return res.status(400).send({ err: ERROR_MESSAGE });
+    return res.status(400).send({ err: ERROR.ERROR_MESSAGE });
   }
 };
 
@@ -25,7 +25,7 @@ export const getDriverById = async (req: Request, res: Response) => {
     return res.status(200).json(driver);
   } catch (error: any) {
     logger.error(error.message);
-    return res.status(400).send({ err: ERROR_MESSAGE });
+    return res.status(400).send({ err: ERROR.ERROR_MESSAGE });
   }
 };
 
@@ -37,7 +37,7 @@ export const getSeasonsByDriverId = async (req: Request, res: Response) => {
     return res.status(200).json(seasons);
   } catch (error: any) {
     logger.error(error.message);
-    return res.status(400).send({ err: ERROR_MESSAGE });
+    return res.status(400).send({ err: ERROR.ERROR_MESSAGE });
   }
 };
 
@@ -49,7 +49,7 @@ export const getCarsByDriverId = async (req: Request, res: Response) => {
     return res.status(200).json(cars);
   } catch (error: any) {
     logger.error(error.message);
-    return res.status(400).send({ err: ERROR_MESSAGE });
+    return res.status(400).send({ err: ERROR.ERROR_MESSAGE });
   }
 };
 
@@ -61,6 +61,6 @@ export const getDriverCareerByDriverId = async (req: Request, res: Response) => 
     return res.status(200).json(cars);
   } catch (error: any) {
     logger.error(error.message);
-    return res.status(400).send({ err: ERROR_MESSAGE });
+    return res.status(400).send({ err: ERROR.ERROR_MESSAGE });
   }
 };
