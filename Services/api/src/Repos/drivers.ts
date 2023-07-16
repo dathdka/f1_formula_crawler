@@ -9,7 +9,7 @@ export const all = async (
   page: number,
   limit: number
 ) => {
-  let builder = drivers
+  const builder = drivers
     .query()
     .withGraphFetched("[participation_history, rank]")
     .page(page, limit);
@@ -47,7 +47,7 @@ export const all = async (
 };
 
 export const getDriverCareerById = async (driverId: number) => {
-  let builder = driver_rank
+  const builder = driver_rank
     .query()
     .withGraphFetched(
       "[season_driver.[season, driver, car], season_race.race.info, pit_stop, qualifying, fastest_laps]"
@@ -94,7 +94,7 @@ export const getById = async (driverId: number) =>
     .withGraphFetched("[participation_history.races.info,rank]");
 
 export const getSeasonsById = async (driverId: number) => {
-  let builder = seasons.query();
+  const builder = seasons.query();
   builder.leftJoin("season_driver", "seasons.id", "season_driver.season_id");
   builder.leftJoin("drivers", "season_driver.driver_id", "drivers.id");
   builder.where("drivers.id", driverId);
@@ -103,7 +103,7 @@ export const getSeasonsById = async (driverId: number) => {
 };
 
 export const getCarsById = async (driverId: number) => {
-  let builder = cars.query();
+  const builder = cars.query();
   builder.leftJoin("season_driver", "cars.id", "season_driver.car_id");
   builder.leftJoin("drivers", "season_driver.driver_id", "drivers.id");
   builder.where("drivers.id", driverId);
