@@ -15,6 +15,8 @@ const OPERATORS = {
   emptyOrNull: { is: "is", equals: "=" },
 };
 
+const ERROR_MESSAGE = "something went wrong, please try again later";
+
 const CONDITIONS = {
   DEFAULT_PAGE : 0,
   DEFAULT_LIMIT : 100,
@@ -24,5 +26,6 @@ const CONDITIONS = {
 module.exports = {
   NODE_ENV: process.env.NODE_ENV || "development",
   OPERATORS,
-  CONDITIONS
+  CONDITIONS,
+  ERROR_MESSAGE
 };
