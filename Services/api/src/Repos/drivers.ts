@@ -20,10 +20,12 @@ export const all = async (
       "start_position",
       "points",
       "completed_laps",
-      "finish_time",
+      "finish_time"
     )
   );
-  builder.modifyGraph("participation_history", (modify) => modify.select("name"))
+  builder.modifyGraph("participation_history", (modify) =>
+    modify.select("name")
+  );
   builder.leftJoin("season_driver", "drivers.id", "season_driver.driver_id");
   builder.leftJoin("driver_rank", "season_driver.id", "driver_rank.driver_id");
   builder.leftJoin("cars", "season_driver.car_id", "cars.id");
@@ -32,7 +34,11 @@ export const all = async (
   builder.leftJoin("circuits", "races.races_info", "circuits.id");
   builder.leftJoin("seasons", "season_driver.season_id", "seasons.id");
   builder.leftJoin("qualifying", "driver_rank.qualifying_id", "qualifying.id");
-  builder.leftJoin("fastest_lap", "driver_rank.fastest_lap_id", "fastest_lap.id");
+  builder.leftJoin(
+    "fastest_lap",
+    "driver_rank.fastest_lap_id",
+    "fastest_lap.id"
+  );
   builder.leftJoin("pit_stop", "driver_rank.id", "pit_stop.driver_rank_id");
   for (let condition of conditions) {
     builder.where(condition.columnName, condition.operator, condition.value);
@@ -61,13 +67,23 @@ export const getDriverCareerById = async (driverId: number) => {
   builder.modifyGraph("pit_stop", (modify) =>
     modify.select("id", "number_of_stops", "time_of_day", "time", "total_time")
   );
-  builder.leftJoin("season_driver", "driver_rank.driver_id", "season_driver.id");
+  builder.leftJoin(
+    "season_driver",
+    "driver_rank.driver_id",
+    "season_driver.id"
+  );
   builder.leftJoin("drivers", "season_driver.driver_id", "drivers.id");
   builder.leftJoin("seasons", "season_driver.season_id", "seasons.id");
   builder.where("drivers.id", driverId);
   builder.groupBy("seasons.name", "driver_rank.id");
   builder.orderBy("seasons.name", "DESC");
-  builder.select("driver_rank.id", "position", "start_position", "points");
+  builder.select(
+    "id",
+    "driver_rank.id",
+    "position",
+    "start_position",
+    "points"
+  );
   return builder;
 };
 

@@ -9,8 +9,8 @@ export const queryStringMiddleware = (
   const queryString = req.query as any;
   for (let comparator in queryString) {
     if (
-      comparator.match(/[^0-9a-z\@\/\.\_]/gi) ||
-      queryString[comparator].match(/[^0-9a-z\@\/\.\_\:]/gi)
+      comparator.match(/[^0-9a-z\@\/\.\_]/) ||
+      queryString[comparator].match(/[^0-9a-z\@\/\.\_\:]/)
     ) {
       logger.info("Invalid query");
       return res.status(400).send({ err: "Invalid query string" });

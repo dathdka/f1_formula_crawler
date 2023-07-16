@@ -1,6 +1,7 @@
 import { Season } from "../types/Model/Season";
 import { seasons } from "../Models/seasons";
 import { season_driver } from "../Models/season_driver";
+import { season_team } from "../Models/season_team";
 import { Condition } from "../types/conditions/Condition";
 export const all = async (
   conditions: Condition[],
@@ -46,5 +47,21 @@ export const champion = async (seasonName: string) => {
   builder.groupBy("season_driver.id");
   builder.orderBy("season_driver.id");
   builder.limit(1);
+  return builder;
+};
+
+export const getByName = async (seasonName: string) =>
+  await seasons
+    .query()
+    .findOne({ name: seasonName })
+    .withGraphFetched("[drivers, races, teams]");
+
+export const getTeamsBySeasonName = async (seasonName: string) => {
+  let builder = season_team.query().withGraphFetched("[season, team]");
+  builder.leftJoin("seasons", "season_team.season_id", "seasons.id");
+  builder.leftJoin("teams", "season_team.team_id", "teams.id");
+  builder.where( "seasons.name", seasonName );
+  builder.orderBy("season_team.points", "DESC");
+  builder.select("season_team.id", "points")
   return builder;
 };
