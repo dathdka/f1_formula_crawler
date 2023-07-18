@@ -1,0 +1,29 @@
+services:
+  postgres: 
+    image: postgres:11
+    volumes:
+      - /var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=formula
+    ports:
+      - 5436:5432
+
+  crawler:
+    build: ./Crawler
+    command: npm start
+    volumes:
+      - ./Crawler:/vrillar/Crawler
+    depends_on:
+      - postgres
+
+  api: 
+    build: ./Services/api
+    command: npm start
+    volumes: 
+      - ./Services/api:/vrillar/Services/api
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
