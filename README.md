@@ -19,15 +19,16 @@ _(Nếu chưa chạy lệnh migrate có thể skip bước 1 và 2)_
 3. Sử dụng tool SQL client (PgAdmin4, DBeaver,...) để kết nối với database postgres đang chạy trên docker vơi cấu hình:
    <a href="https://drive.google.com/uc?export=view&id=1iQiV7U8D7qZRIWlQr6UH6qAG9UbDHA_k"><img src="https://drive.google.com/uc?export=view&id=1iQiV7U8D7qZRIWlQr6UH6qAG9UbDHA_k" style="width: 650px; max-width: 100%; height: auto" title="Click to enlarge picture" />
 
-   Host: localhost
-   Port: 5436
-   Database: formula
-   Username: postgres
-   Password: postgres
+   <br/>Host: localhost
+   <br/>Port: 5436
+   <br/>Database: formula
+   <br/>Username: postgres
+   <br/>Password: postgres
 4. Tiến hành restore bằng file backup 
-   <a href="https://drive.google.com/uc?export=view&id=18OGKvnpL9fYXwcng8scsK8QAPmWfgjz5"><img src="https://drive.google.com/uc?export=view&id=18OGKvnpL9fYXwcng8scsK8QAPmWfgjz5" style="width: 650px; max-width: 100%; height: auto" title="Click to enlarge picture" />
+  <br/> <a href="https://drive.google.com/uc?export=view&id=18OGKvnpL9fYXwcng8scsK8QAPmWfgjz5"><img src="https://drive.google.com/uc?export=view&id=18OGKvnpL9fYXwcng8scsK8QAPmWfgjz5" style="width: 650px; max-width: 100%; height: auto" title="Click to enlarge picture" />
 
    <a href="https://drive.google.com/uc?export=view&id=1namcV568u83vEStmycrCgxozzfTRfFU3"><img src="https://drive.google.com/uc?export=view&id=1namcV568u83vEStmycrCgxozzfTRfFU3" style="width: 650px; max-width: 100%; height: auto" title="Click to enlarge picture" />
+   <br/>
 
 
 
