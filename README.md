@@ -1,8 +1,3 @@
-Mục lục
-<br/>
-1. [SETUP](SETUP)
-2. [CONTENT](CONTENT)
-
 # SETUP 
 
 1. build image cho project: `docker-compose build`
@@ -22,8 +17,7 @@ _(Nếu chưa chạy lệnh migrate có thể skip bước 1 và 2)_
 2. Rollback migrate: `docker-compose exec api npx knex migrate:rollback --knexfile src/knexfile.ts`
 
 3. Sử dụng tool SQL client (PgAdmin4, DBeaver,...) để kết nối với database postgres đang chạy trên docker vơi cấu hình:
-   <img src="https://drive.google.com/uc?export=view&id=1iQiV7U8D7qZRIWlQr6UH6qAG9UbDHA_k" style="width: 650px; max-width: 100%; height: auto" />
-
+   <br/><img src="https://drive.google.com/uc?export=view&id=1iQiV7U8D7qZRIWlQr6UH6qAG9UbDHA_k" style="width: 650px; max-width: 100%; height: auto" />
    <br/>Host: localhost
    <br/>Port: 5436
    <br/>Database: formula
