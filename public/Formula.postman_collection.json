@@ -1,0 +1,374 @@
+{
+	"info": {
+		"_postman_id": "943a9a94-976a-424e-8ac2-2ff95745e011",
+		"name": "Formula",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20261734"
+	},
+	"item": [
+		{
+			"name": "Driver",
+			"item": [
+				{
+					"name": "Get all record which have fit with custom filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/driver/?page=0&limit=50&seasons@name=2013&driver_rank@position.gte=1&circuits@location=Brazil",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"driver",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"description": "Page number"
+								},
+								{
+									"key": "limit",
+									"value": "50",
+									"description": "Result per page"
+								},
+								{
+									"key": "seasons@name",
+									"value": "2013"
+								},
+								{
+									"key": "driver_rank@position.gte",
+									"value": "1"
+								},
+								{
+									"key": "circuits@location",
+									"value": "Brazil"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get driver by driver id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/driver/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"driver",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get seasons by driver id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/driver/10/seasons",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"driver",
+								"10",
+								"seasons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cars by driver id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/driver/10/cars",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"driver",
+								"10",
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get driver career by driver id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/driver/2/career",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"driver",
+								"2",
+								"career"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Driver REST API collection"
+		},
+		{
+			"name": "Season",
+			"item": [
+				{
+					"name": "Get all record which have fit with custom filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/season/?page=0&limit=50&driver_rank@points.gte=5&cars@name.like=Mercedes&races@date.gte=05/07/2010",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"season",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"description": "Page number"
+								},
+								{
+									"key": "limit",
+									"value": "50",
+									"description": "Result per page"
+								},
+								{
+									"key": "driver_rank@points.gte",
+									"value": "5"
+								},
+								{
+									"key": "cars@name.like",
+									"value": "Mercedes"
+								},
+								{
+									"key": "races@date.gte",
+									"value": "05/07/2010"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get season by season name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/season/2022",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"season",
+								"2022"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get winner by season name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/season/1964/winner",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"season",
+								"1964",
+								"winner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get teams have been involved in season",
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "secret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/season/2022/teams",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"season",
+								"2022",
+								"teams"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Season REST API collection"
+		},
+		{
+			"name": "Car",
+			"item": [
+				{
+					"name": "Get all record which have fit with custom filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/car/?page=2&limit=10&driver_rank@position.lessThan=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"car",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2",
+									"description": "Page number"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Result per page"
+								},
+								{
+									"key": "driver_rank@position.lessThan",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get drivers who had been driven car",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/car/Mercedes/driver",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"car",
+								"Mercedes",
+								"driver"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Car REST API collection"
+		}
+	]
+}
